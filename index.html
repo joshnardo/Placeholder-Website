@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tasty Heavy — Home</title>
+  <style>
+    :root { --accent:#06bebd; --bg:#ffffff; --fg:#000000; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--fg); }
+
+    /* -----------------------
+       HEADER + NAV
+       ----------------------- */
+    header.site-header{
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 18px; border-bottom: 1px solid #eaeaea; background: #fff;
+    }
+    .logo img { height: 42px; display: block; }
+    nav[aria-label="Primary"] a {
+      text-decoration: none; color: #000; font-weight: 700; margin-left: 22px;
+      padding-bottom: 2px; border-bottom: 2px solid transparent; font-size: 14px;
+    }
+    nav[aria-label="Primary"] a:hover { color: var(--accent); }
+    nav[aria-label="Primary"] a.active { border-color: var(--accent); color: #000; }
+
+    /* -----------------------
+       FULL-BLEED WORK GRID
+       ----------------------- */
+    main { padding: 0; }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      width: 100%;
+    }
+    @media (max-width: 900px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      border: 8px solid #fff; /* white frame */
+      isolation: isolate;
+    }
+    .card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .card .overlay {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      padding: 16px;
+      color: #fff;
+      background: rgba(0,0,0,0.45);
+      opacity: 0; transition: opacity .18s ease-in-out;
+      text-align: center;
+    }
+    .card:hover .overlay,
+    .card:focus-within .overlay { opacity: 1; }
+
+    .overlay .title {
+      margin: 0;
+      font-weight: 800;
+      line-height: 1.1;
+      font-size: clamp(18px, 3.2vw, 28px);
+      letter-spacing: .2px;
+      text-wrap: balance;
+    }
+
+    .card a {
+      position: absolute; inset: 0; z-index: 2; text-indent: -9999px;
+    }
+    .card a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    /* -----------------------
+       FOOTER
+       ----------------------- */
+    footer.site-footer{
+      border-top:1px solid #eaeaea; background:#fff;
+      padding:16px 18px; font-size:14px; color:#000;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:10px;
+    }
+    footer.site-footer a{ color:#000; text-decoration:none; font-weight:700; }
+    footer.site-footer a:hover{ color:var(--accent); }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1742775262/TastyLogo2024_i09kgy.png" alt="Tasty Heavy logo">
+    </a>
+    <nav aria-label="Primary">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <section class="work-grid" aria-label="Portfolio grid">
+      <!-- Project 1 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?q=80&w=1600&auto=format&fit=crop" alt="The Quiet Launch thumbnail">
+        <div class="overlay"><h2 class="title">The Quiet Launch</h2></div>
+        <a href="project-1.html">Open The Quiet Launch</a>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1600&auto=format&fit=crop" alt="After Hours thumbnail">
+        <div class="overlay"><h2 class="title">After Hours</h2></div>
+        <a href="project-2.html">Open After Hours</a>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop" alt="Live at the Warehouse thumbnail">
+        <div class="overlay"><h2 class="title">Live at the Warehouse</h2></div>
+        <a href="project-3.html">Open Live at the Warehouse</a>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1600&auto=format&fit=crop" alt="Shift thumbnail">
+        <div class="overlay"><h2 class="title">Shift</h2></div>
+        <a href="project-4.html">Open Shift</a>
+      </article>
+
+      <!-- Project 5 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop" alt="Project 5 thumbnail">
+        <div class="overlay"><h2 class="title">Project 5</h2></div>
+        <a href="#">Open Project 5</a>
+      </article>
+
+      <!-- Project 6 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1600&auto=format&fit=crop" alt="Project 6 thumbnail">
+        <div class="overlay"><h2 class="title">Project 6</h2></div>
+        <a href="#">Open Project 6</a>
+      </article>
+
+      <!-- Project 7 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?q=80&w=1600&auto=format&fit=crop" alt="Project 7 thumbnail">
+        <div class="overlay"><h2 class="title">Project 7</h2></div>
+        <a href="#">Open Project 7</a>
+      </article>
+
+      <!-- Project 8 -->
+      <article class="card">
+        <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61?q=80&w=1600&auto=format&fit=crop" alt="Project 8 thumbnail">
+        <div class="overlay"><h2 class="title">Project 8</h2></div>
+        <a href="#">Open Project 8</a>
+      </article>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <span>© 2025 Tasty Heavy</span>
+    <span>
+      <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a>
+      &nbsp; | &nbsp;
+      <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
+    </span>
+  </footer>
+</body>
+</html>
