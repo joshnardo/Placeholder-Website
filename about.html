@@ -9,6 +9,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--fg); }
 
+    /* HEADER + NAV */
     header.site-header{
       position: sticky; top: 0; z-index: 10;
       display: flex; align-items: center; justify-content: space-between;
@@ -22,13 +23,41 @@
     nav[aria-label="Primary"] a:hover { color: var(--accent); }
     nav[aria-label="Primary"] a.active { border-color: var(--accent); color: #000; }
 
-    main { padding: 60px 20px; max-width: 900px; margin: 0 auto; }
-    h1 { font-size: 32px; font-weight: 800; margin-bottom: 20px; }
-    h2 { font-size: 22px; font-weight: 700; margin-top: 50px; margin-bottom: 15px; }
+    /* MAIN LAYOUT */
+    main { padding: 0; max-width: 1000px; margin: 0 auto; }
+
+    /* Framed hero with responsive white gutters */
+    .hero {
+      margin: 40px 20px; /* top/bottom and side spacing */
+      border: 8px solid #fff; /* white frame */
+    }
+    .hero img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    section { padding: 0 20px 40px; }
+    h2 { font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 15px; }
     p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
     ul { padding-left: 20px; margin-bottom: 30px; }
     li { margin-bottom: 8px; }
 
+    /* Two-column layout for Capabilities + Contact */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    @media (max-width: 800px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* FOOTER */
     footer.site-footer{
       border-top:1px solid #eaeaea; background:#fff;
       padding:16px 18px; font-size:14px; color:#000;
@@ -53,34 +82,44 @@
 
   <!-- MAIN -->
   <main>
-    <h1>About Tasty Heavy</h1>
-    <p>
-      Tasty Heavy is a creative studio and production company.  
-      We believe in making bold, intentional work that combines craft, originality, and storytelling.  
-      Our projects range from documentaries to commercials, music content to brand campaigns — always with a focus on creating memorable, culture-driven work.
-    </p>
-    <p>
-      Founded by Josh Nardo, Tasty Heavy blends years of experience across video, design, and creative strategy with a hands-on, collaborative approach.  
-      We’re drawn to projects that surprise, connect, and last — whether for brands, artists, or ourselves.
-    </p>
+    <!-- Hero Image with white frame -->
+    <div class="hero">
+      <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1757086450/P_238571_khiqr1.jpg" alt="Studio environment photo">
+    </div>
 
-    <h2>Capabilities</h2>
-    <ul>
-      <li>Creative direction & concept development</li>
-      <li>Video production & editing</li>
-      <li>Content marketing & brand storytelling</li>
-      <li>Documentary & music video production</li>
-      <li>Social-first campaigns & short-form content</li>
-    </ul>
+    <!-- Studio Description -->
+    <section>
+      <p>
+        Tasty Heavy is a creative studio and production company.  
+        We believe in making bold, intentional work that combines craft, originality, and storytelling.  
+        Our projects range from documentaries to commercials, music content to brand campaigns — always with a focus on creating memorable, culture-driven work.
+      </p>
+      <p>
+        Founded by Josh Nardo, Tasty Heavy blends years of experience across video, design, and creative strategy with a hands-on, collaborative approach.  
+        We’re drawn to projects that surprise, connect, and last — whether for brands, artists, or ourselves.
+      </p>
+    </section>
 
-    <h2>Contact</h2>
-    <p>
-      For inquiries, collaborations, or just to say hi:
-    </p>
-    <p>
-      <strong>Email:</strong> <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a><br>
-      <strong>Instagram:</strong> <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
-    </p>
+    <!-- Capabilities + Contact -->
+    <section class="two-col">
+      <div>
+        <h2>Capabilities</h2>
+        <ul>
+          <li>Concept Development</li>
+          <li>Production</li>
+          <li>Post Production</li>
+          <li>Music and Sound Design</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <p>For inquiries, collaborations, or just to say hi:</p>
+        <p>
+          <strong>Email:</strong> <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a><br>
+          <strong>Instagram:</strong> <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
+        </p>
+      </div>
+    </section>
   </main>
 
   <!-- FOOTER -->

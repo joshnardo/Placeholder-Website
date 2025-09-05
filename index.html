@@ -33,8 +33,10 @@
     .work-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0;
-      width: 100%;
+      gap: 16px;                /* consistent white space between cards */
+      padding: 8px;             /* white gutter around edges */
+      background: #fff;         /* ensures gutters are white */
+      box-sizing: border-box;
     }
     @media (max-width: 900px) {
       .work-grid { grid-template-columns: 1fr; }
@@ -44,7 +46,7 @@
       position: relative;
       overflow: hidden;
       background: #fff;
-      border: 8px solid #fff; /* white frame */
+      border: 8px solid #fff;   /* consistent white frame */
       isolation: isolate;
     }
     .card img {
