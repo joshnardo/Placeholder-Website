@@ -129,77 +129,7 @@
 
   <!-- MAIN -->
   <main>
-    <section class="work-grid" aria-label="Portfolio grid">
-      <!-- Project 1 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?q=80&w=1600&auto=format&fit=crop" alt="The Quiet Launch thumbnail">
-        <div class="overlay"><h2 class="title">The Quiet Launch</h2></div>
-        <a href="project-1.html">Open The Quiet Launch</a>
-      </article>
-
-      <!-- Project 2 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1600&auto=format&fit=crop" alt="After Hours thumbnail">
-        <div class="overlay"><h2 class="title">After Hours</h2></div>
-        <a href="project-2.html">Open After Hours</a>
-      </article>
-
-      <!-- Project 3 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop" alt="Live at the Warehouse thumbnail">
-        <div class="overlay"><h2 class="title">Live at the Warehouse</h2></div>
-        <a href="project-3.html">Open Live at the Warehouse</a>
-      </article>
-
-      <!-- Project 4 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1600&auto=format&fit=crop" alt="Shift thumbnail">
-        <div class="overlay"><h2 class="title">Shift</h2></div>
-        <a href="project-4.html">Open Shift</a>
-      </article>
-
-      <!-- Project 5 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop" alt="Project 5 thumbnail">
-        <div class="overlay"><h2 class="title">Project 5</h2></div>
-        <a href="project-5.html">Open Project 5</a>
-      </article>
-
-      <!-- Project 6 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1600&auto=format&fit=crop" alt="Project 6 thumbnail">
-        <div class="overlay"><h2 class="title">Project 6</h2></div>
-        <a href="project-6.html">Open Project 6</a>
-      </article>
-
-      <!-- Project 7 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?q=80&w=1600&auto=format&fit=crop" alt="Project 7 thumbnail">
-        <div class="overlay"><h2 class="title">Project 7</h2></div>
-        <a href="project-7.html">Open Project 7</a>
-      </article>
-
-      <!-- Project 8 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1481277542470-605612bd2d61?q=80&w=1600&auto=format&fit=crop" alt="Project 8 thumbnail">
-        <div class="overlay"><h2 class="title">Project 8</h2></div>
-        <a href="project-8.html">Open Project 8</a>
-      </article>
-
-      <!-- Project 9 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop" alt="Project 9 thumbnail">
-        <div class="overlay"><h2 class="title">Project 9</h2></div>
-        <a href="project-9.html">Open Project 9</a>
-      </article>
-
-      <!-- Project 10 -->
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop" alt="Project 10 thumbnail">
-        <div class="overlay"><h2 class="title">Project 10</h2></div>
-        <a href="project-10.html">Open Project 10</a>
-      </article>
-    </section>
+    <section class="work-grid" aria-label="Portfolio grid" id="projectGrid"></section>
   </main>
 
   <!-- FOOTER -->
@@ -211,5 +141,40 @@
       <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
     </span>
   </footer>
+
+  <script>
+    const projects = [
+      { title:"Shark - Fan Family", img:"https://res.cloudinary.com/dlyxadp9n/image/upload/v1757029781/Media.00_21_21_19.Still002_k12fhg.jpg", link:"project-2.html" },
+      { title:"Brainwash Music Show", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/b5777fb5-3932-4b91-8f24-cb75f9f2a0ea.gif?ClientID=sulu&Date=1757117755&Signature=88355709fa6ba59b49174d785e01a6d121d1a80c", link:"project-8.html" },
+      { title:"Beyond Yoga x Rare Beauty", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/9d24f9af-e9a5-453f-8fb2-e9bc229c22ef.gif?ClientID=sulu&Date=1757115661&Signature=102421b28788a7f5367f18cec0f47fdb025d6c18", link:"project-3.html" },
+       { title:"Sun Day Red", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/f9b9d706-388b-431d-bd08-c8db003fe8ab.gif?ClientID=sulu&Date=1757115259&Signature=cf85182d419e9bd9200da57c8272fe66d9e8ae35", link:"project-1.html" },
+      { title:"Fashion Reel", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/18e1ac16-ac39-46e2-aedb-1b068b5a54aa.gif?ClientID=sulu&Date=1757117677&Signature=f1b6ceda79ae9b489cc3b0649e13e08da09c5dfc", link:"project-4.html" },
+      { title:"Vans - Customs", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/42f6055a-423e-467b-895e-d75a59c1710f.gif?ClientID=sulu&Date=1757116016&Signature=0b3eaa315342631d53c2db543924960a8e7a55fc", link:"project-5.html" },
+      { title:"Brixton - Spring 23", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/23d14d67-19da-4522-ac1d-d79b3e3b6090.gif?ClientID=sulu&Date=1757118383&Signature=0b716a8f1424e01ccc865231af282ea27010370a", link:"project-6.html" },
+      { title:"Vans - Sidestripe Sessions", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/a9f3c729-37d5-4b46-be8c-606aeb8714a7.gif?ClientID=sulu&Date=1757118330&Signature=30348582f24f7f91d850571d549b348c3ac36465", link:"project-7.html" },
+      { title:"Project 9", img:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop", link:"project-9.html" },
+      { title:"Project 10", img:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop", link:"project-10.html" },
+      { title:"Project 11", img:"https://images.unsplash.com/photo-1535223289827-42f1e9919769?q=80&w=1600&auto=format&fit=crop", link:"project-11.html" },
+      { title:"Project 12", img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1600&auto=format&fit=crop", link:"project-12.html" },
+      { title:"Project 13", img:"https://images.unsplash.com/photo-1499084732479-de2c02d45fc4?q=80&w=1600&auto=format&fit=crop", link:"project-13.html" },
+      { title:"Project 14", img:"https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=1600&auto=format&fit=crop", link:"project-14.html" },
+      { title:"Project 15", img:"https://images.unsplash.com/photo-1473186578172-c141e6798cf4?q=80&w=1600&auto=format&fit=crop", link:"project-15.html" },
+      { title:"Project 16", img:"https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1600&auto=format&fit=crop", link:"project-16.html" },
+      { title:"Project 17", img:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1600&auto=format&fit=crop", link:"project-17.html" },
+      { title:"Project 18", img:"https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1600&auto=format&fit=crop", link:"project-18.html" },
+      { title:"Project 19", img:"https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop", link:"project-19.html" },
+      { title:"Project 20", img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop", link:"project-20.html" }
+    ];
+
+    const grid = document.getElementById("projectGrid");
+    projects.forEach(p => {
+      grid.innerHTML += `
+        <article class="card">
+          <img src="${p.img}" alt="${p.title} thumbnail">
+          <div class="overlay"><h2 class="title">${p.title}</h2></div>
+          <a href="${p.link}">Open ${p.title}</a>
+        </article>`;
+    });
+  </script>
 </body>
 </html>
