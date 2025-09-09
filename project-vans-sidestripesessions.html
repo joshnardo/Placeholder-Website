@@ -38,10 +38,59 @@
        PROJECT LAYOUT
        ----------------------- */
     .project-title{ font-size:30px; margin:0 0 18px; font-weight:800; }
-    .video{ position:relative; width:100%; aspect-ratio:16/9; background:#000; overflow:hidden; }
-    .video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#000; }
 
-    .overview{ margin-top:22px; border-top:1px solid #eee; padding-top:18px; }
+    /* Single main video */
+    .featured-video {
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      margin-bottom:40px;
+      background:#000;
+      overflow:hidden;
+    }
+    .featured-video iframe {
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+      background:#000;
+    }
+
+    /* Description block */
+    .project-description {
+      margin: 0 0 40px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: #333;
+    }
+    .project-description p {
+      margin: 0 0 16px;
+    }
+
+    /* Grid of 6 videos (responsive) */
+    .video-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap:24px;
+    }
+    .video {
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      background:#000;
+      overflow:hidden;
+    }
+    .video iframe {
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+      background:#000;
+    }
+
+    .overview{ margin-top:32px; border-top:1px solid #eee; padding-top:18px; }
     .overview h2{ font-size:18px; font-weight:800; margin:0 0 12px; letter-spacing:.2px; }
     .overview p{ font-size:16px; line-height:1.65; margin:0 0 12px; }
 
@@ -76,22 +125,55 @@
   <!-- MAIN -->
   <main>
     <section class="wrap">
-      <h1 class="project-title" id="projectTitle">Sun Day Red - The Spectator</h1>
+      <h1 class="project-title">Vans - Sidestripe Sessions</h1>
 
-      <!-- Clean Vimeo embed -->
-      <div class="video">
-        <iframe id="projectVimeo"
-          src="https://player.vimeo.com/video/1096001574?autoplay=0&muted=0&loop=0&controls=1&title=0&byline=0&portrait=0&transparent=0&dnt=1"
-          allow="autoplay; fullscreen; picture-in-picture"
-          title="Project Video"></iframe>
+      <!-- Featured Single Video -->
+      <div class="featured-video">
+        <iframe src="https://www.youtube.com/embed/LqJNqmIzIKU"
+          title="Featured Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <!-- Project Description -->
+      <div class="project-description">
+        <p>
+          Together with Vans, we helped develop Sidestripe Sessions, a live music series shot at Vans HQ in Costa Mesa CA.  Over 2 years and 24 episodes, we hosted Anderson Paak, Idles, Cuco, Quicksand, Channel Tres, and more.
+        </p>
+        <p>
+          Tasty Heavy handled all aspects of Video and Audio Production and Post Production.
+        </p>
+        <p>
+          Below are a few more from the series.
+        </p>
+      </div>
+
+      <!-- Video Grid -->
+      <div class="video-grid">
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/1NCWAkzDwxw?si=lSBCsKrRZYP5tNSl" title="Video 1" allowfullscreen></iframe>
+        </div>
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/eFNUNUBbKJA?si=2gS9leiuOFLcMo-I" title="Video 2" allowfullscreen></iframe>
+        </div>
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/GlM_zbOaCvs?si=GUrSZE80Z_SMwkj9" title="Video 3" allowfullscreen></iframe>
+        </div>
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/Dplg4G3mQzs?si=51Io_C9XR3XptY4Z" title="Video 4" allowfullscreen></iframe>
+        </div>
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/6v6XW7TmFjM?si=-CYVo51895nxFULS" title="Video 5" allowfullscreen></iframe>
+        </div>
+        <div class="video">
+          <iframe src="https://www.youtube.com/embed/ZP2Y9GSqLXo?si=-YTpBAyjYTKUxgth" title="Video 6" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- Overview -->
-      <div class="overview" id="projectOverview">
-          Client: Sun Day Red &nbsp;•&nbsp; Role: Director, DP, Edit, Editor &nbsp;•&nbsp; Year: 2025
-        </p>
-        <p>
-        </p>
+      <div class="overview">
+        <h2>Overview</h2>
+        <p> Role: Production, Director, DP, Sound Mix, Editor </p>
       </div>
     </section>
   </main>
