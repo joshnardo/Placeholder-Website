@@ -3,41 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tasty Heavy — Project</title>
+  <title>Tasty Heavy — Brainwash Music Show</title>
 
   <style>
-    :root { --accent:#06bebd; }
-    *{ box-sizing:border-box }
-    html,body{ height:100% }
-    body{
+    :root { --accent:#06bebd; --bg:#ffffff; --fg:#000000; }
+    * { box-sizing:border-box; }
+    body {
       margin:0; font-family:"Helvetica Neue", Arial, sans-serif;
-      background:#fff; color:#000;
-      display:flex; flex-direction:column; min-height:100vh;
+      background: var(--bg); color: var(--fg);
     }
-
-    main{ flex:1 }
-    .wrap{ max-width:1100px; margin:0 auto; padding:40px 18px; }
 
     /* -----------------------
        HEADER + NAV
        ----------------------- */
-    header.site-header{
-      position:sticky; top:0; z-index:10;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:10px 18px; border-bottom:1px solid #eaeaea; background:#fff;
+    header.site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 18px; border-bottom: 1px solid #eaeaea; background: #fff;
     }
-    .logo img{ height:42px; display:block; }
-    nav[aria-label="Primary"] a{
-      text-decoration:none; color:#000; font-weight:700; margin-left:22px;
-      padding-bottom:2px; border-bottom:2px solid transparent; font-size:14px;
+    .logo-block { display: flex; align-items: flex-end; gap: 12px; flex: 1 1 auto; }
+    .logo img { height: 42px; display: block; }
+    .tagline { font-size: 13px; font-weight: 400; color: #555; white-space: nowrap; }
+
+    nav[aria-label="Primary"] { display: flex; gap: 16px; }
+    nav[aria-label="Primary"] a {
+      text-decoration: none; color: #000; font-weight: 700;
+      padding-bottom: 2px; border-bottom: 2px solid transparent;
+      font-size: 14px;
     }
-    nav[aria-label="Primary"] a:hover{ color:var(--accent); }
-    nav[aria-label="Primary"] a.active{ border-color:var(--accent); }
+    nav[aria-label="Primary"] a:hover { color: var(--accent); }
+    nav[aria-label="Primary"] a.active { border-color: var(--accent); color: #000; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; width: 28px; height: 22px; }
+    .hamburger span { display: block; height: 3px; width: 100%; background: #000; border-radius: 2px; }
+
+    .mobile-nav {
+      display: none; position: fixed; top: 60px; right: 0; left: 0;
+      background: #fff; flex-direction: column;
+      border-top: 1px solid #eaeaea; z-index: 3000;
+    }
+    .mobile-nav.show { display: flex; }
+    .mobile-nav a {
+      padding: 14px 18px;
+      border-bottom: 1px solid #eaeaea;
+      text-decoration: none; color: #000; font-weight: 700;
+    }
+    .mobile-nav a:hover { background: #f5f5f5; color: var(--accent); }
+
+    @media (max-width: 768px) {
+      nav[aria-label="Primary"] { display: none; }
+      .hamburger { display: flex; }
+      .logo-block { flex-wrap: wrap; gap: 6px; }
+      .tagline { font-size: 12px; white-space: normal; }
+    }
 
     /* -----------------------
        PROJECT LAYOUT
        ----------------------- */
-    .project-title{ font-size:30px; margin:0 0 18px; font-weight:800; }
+    main { padding-top: 80px; max-width: 1100px; margin: 0 auto; padding-left: 18px; padding-right: 18px; }
+
+    .project-title { font-size: 30px; margin: 0 0 18px; font-weight: 800; }
 
     /* Single main video */
     .featured-video {
@@ -49,30 +74,24 @@
       overflow:hidden;
     }
     .featured-video iframe {
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      background:#000;
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      border:0; background:#000;
     }
 
     /* Description block */
     .project-description {
       margin: 0 0 40px;
-      font-size: 16px;
-      line-height: 1.65;
-      color: #333;
+      font-size: 16px; line-height: 1.65; color: #333;
     }
-    .project-description p {
-      margin: 0 0 16px;
-    }
+    .project-description p { margin: 0 0 16px; }
 
-    /* Grid of 4 playlists (2x2) */
+    /* Playlists grid */
     .playlist-grid {
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
       gap:24px;
+      margin-bottom: 40px;
     }
     .playlist {
       position:relative;
@@ -82,138 +101,123 @@
       overflow:hidden;
     }
     .playlist iframe {
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      background:#000;
+      position:absolute; inset:0;
+      width:100%; height:100%; border:0; background:#000;
     }
 
-    .overview{ margin-top:32px; border-top:1px solid #eee; padding-top:18px; }
-    .overview h2{ font-size:18px; font-weight:800; margin:0 0 12px; letter-spacing:.2px; }
-    .overview p{ font-size:16px; line-height:1.65; margin:0 0 12px; }
+    .overview {
+      margin-top:32px; border-top:1px solid #eee; padding-top:18px;
+    }
+    .overview h2 { font-size:18px; font-weight:800; margin:0 0 12px; letter-spacing:.2px; }
+    .overview p { font-size:16px; line-height:1.65; margin:0 0 12px; }
 
     /* -----------------------
        FOOTER
        ----------------------- */
-    footer.site-footer{
+    footer.site-footer {
       border-top:1px solid #eaeaea; background:#fff;
       padding:16px 18px; font-size:14px; color:#000;
       display:flex; justify-content:space-between; align-items:center;
-      flex-wrap:wrap; gap:10px;
+      flex-wrap:wrap; gap:10px; margin-top: 40px;
     }
-    footer.site-footer a{ color:#000; text-decoration:none; font-weight:700; }
-    footer.site-footer a:hover{ color:var(--accent); }
+    footer.site-footer a { color:#000; text-decoration:none; font-weight:700; }
+    footer.site-footer a:hover { color:var(--accent); }
   </style>
 </head>
 <body>
   <!-- HEADER -->
-  <div id="site-header"></div>
-  <template id="header-fallback">
-    <header class="site-header">
+  <header class="site-header">
+    <div class="logo-block">
       <a class="logo" href="index.html">
         <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1742775262/TastyLogo2024_i09kgy.png" alt="Tasty Heavy logo">
       </a>
-      <nav aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-      </nav>
-    </header>
-  </template>
+      <span class="tagline">is Josh Nardo /// Video /// Creative /// Music ///</span>
+    </div>
+    <nav aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </div>
 
   <!-- MAIN -->
   <main>
-    <section class="wrap">
-      <h1 class="project-title">Brainwash Music Show</h1>
+    <h1 class="project-title">Brainwash Music Show</h1>
 
-      <!-- Featured Single Video -->
-      <div class="featured-video">
-        <iframe src="https://www.youtube.com/embed/tUXTsmDVeh0?si=014BWvXKKmX3Nyuc"
-          title="Featured Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
+    <!-- Featured Single Video -->
+    <div class="featured-video">
+      <iframe src="https://www.youtube.com/embed/tUXTsmDVeh0?si=014BWvXKKmX3Nyuc"
+        title="Featured Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
 
-      <!-- Project Description -->
-      <div class="project-description">
-        <p>
-          Brainwash music show is a passion project with the goal to being depth back to music.  We get to know artists through intimate documentaries, throw a show, and capture the energy and emotion of their live performance
-        </p>
-        <p>
-          Over 6 months, we threw 4 shows, produced xx pieces of content, and racked up 200k organic views over all platforms to date.
-        </p>
-        <p>
-          Below are all 4 artist series, feel free to pull up a chair and enjoy :)
-        </p>
-      </div>
+    <!-- Project Description -->
+    <div class="project-description">
+      <p>
+        Brainwash Music Show is a passion project with the goal of bringing depth back to music.  
+        We get to know artists through intimate documentaries, throw a show, and capture the energy and emotion of their live performance.
+      </p>
+      <p>
+        Over 6 months, we threw 4 shows, produced xx pieces of content, and racked up 200k organic views across all platforms to date.
+      </p>
+      <p>
+        Below are all 4 artist series — feel free to pull up a chair and enjoy :)
+      </p>
+    </div>
 
-      <!-- Playlists Grid -->
-      <div class="playlist-grid">
-        <div class="playlist">
-          <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1LwcgiY_jDwAXrbbwvLLZCVZD"
-            title="Playlist 1" allowfullscreen></iframe>
-        </div>
-        <div class="playlist">
-          <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1LwcMzkM_K9jb20jmUyJy0JFZ"
-            title="Playlist 2" allowfullscreen></iframe>
-        </div>
-        <div class="playlist">
-          <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1LwcE6rIM7avMt5M7GcPFgTfM"
-            title="Playlist 3" allowfullscreen></iframe>
-        </div>
-        <div class="playlist">
-          <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1Lwfhy1njfO1IDWF9DG_OTaDb"
-            title="Playlist 4" allowfullscreen></iframe>
-        </div>
+    <!-- Playlists Grid -->
+    <div class="playlist-grid">
+      <div class="playlist">
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1LwcgiY_jDwAXrbbwvLLZCVZD"
+          title="Playlist 1" allowfullscreen></iframe>
       </div>
+      <div class="playlist">
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1LwcMzkM_K9jb20jmUyJy0JFZ"
+          title="Playlist 2" allowfullscreen></iframe>
+      </div>
+      <div class="playlist">
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1LwcE6rIM7avMt5M7GcPFgTfM"
+          title="Playlist 3" allowfullscreen></iframe>
+      </div>
+      <div class="playlist">
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLd7AbWHA1Lwfhy1njfO1IDWF9DG_OTaDb"
+          title="Playlist 4" allowfullscreen></iframe>
+      </div>
+    </div>
 
-      <!-- Overview -->
-      <div class="overview">
-        <h2>Overview</h2>
-        <p> Role: Concept Development, Production, Director, DP, Editor &nbsp;•&nbsp; Year: 2023</p>
-      </div>
-    </section>
+    <!-- Overview -->
+    <div class="overview">
+      <h2>Overview</h2>
+      <p>Role: Concept Development, Production, Director, DP, Editor &nbsp;•&nbsp; Year: 2023</p>
+    </div>
   </main>
 
   <!-- FOOTER -->
-  <div id="site-footer"></div>
-  <template id="footer-fallback">
-    <footer class="site-footer">
-      <span>© 2025 Tasty Heavy</span>
-      <span>
-        <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a>
-        &nbsp; | &nbsp;
-        <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
-      </span>
-    </footer>
-  </template>
+  <footer class="site-footer">
+    <span>© 2025 Tasty Heavy</span>
+    <span>
+      <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a>
+      &nbsp; | &nbsp;
+      <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
+    </span>
+  </footer>
 
-  <!-- Scripts -->
   <script>
-    async function injectPartial(mountId, url, fallbackTemplateId){
-      const mount = document.getElementById(mountId);
-      try{
-        const res = await fetch(url, { credentials:'same-origin' });
-        if(!res.ok) throw new Error('Fetch failed');
-        mount.innerHTML = await res.text();
-      }catch(e){
-        const tpl = document.getElementById(fallbackTemplateId);
-        mount.innerHTML = tpl ? tpl.innerHTML : '';
-      }
-      highlightActiveNav(mount);
-    }
-    function highlightActiveNav(scope){
-      const path = location.pathname.split('/').pop() || 'index.html';
-      const links = scope.querySelectorAll('nav[aria-label="Primary"] a');
-      links.forEach(a=>{
-        const href = a.getAttribute('href');
-        const isHome = (path === '' || path === 'index.html') && (href === 'index.html' || href === './' || href === '/');
-        if(isHome || href === path) a.classList.add('active');
-      });
-    }
-    injectPartial('site-header', '/partials/header.html', 'header-fallback');
-    injectPartial('site-footer', '/partials/footer.html', 'footer-fallback');
+    // Hamburger toggle
+    const hamburger = document.getElementById("hamburger");
+    const mobileNav = document.getElementById("mobileNav");
+    hamburger.addEventListener("click", () => {
+      mobileNav.classList.toggle("show");
+    });
   </script>
 </body>
 </html>
