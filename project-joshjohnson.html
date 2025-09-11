@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tasty Heavy — Project</title>
+
+  <style>
+    :root { --accent:#06bebd; }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0; font-family:"Helvetica Neue", Arial, sans-serif;
+      background:#fff; color:#000;
+      display:flex; flex-direction:column; min-height:100vh;
+    }
+
+    main{ flex:1 }
+    .wrap{ max-width:1100px; margin:0 auto; padding:40px 18px; }
+
+    /* -----------------------
+       HEADER + NAV
+       ----------------------- */
+    header.site-header{
+      position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 18px; border-bottom:1px solid #eaeaea; background:#fff;
+    }
+    .logo img{ height:42px; display:block; }
+    nav[aria-label="Primary"] a{
+      text-decoration:none; color:#000; font-weight:700; margin-left:22px;
+      padding-bottom:2px; border-bottom:2px solid transparent; font-size:14px;
+    }
+    nav[aria-label="Primary"] a:hover{ color:var(--accent); }
+    nav[aria-label="Primary"] a.active{ border-color:var(--accent); }
+
+    /* -----------------------
+       PROJECT LAYOUT
+       ----------------------- */
+    .project-title{ font-size:30px; margin:0 0 18px; font-weight:800; }
+    .video{ position:relative; width:100%; aspect-ratio:16/9; background:#000; overflow:hidden; }
+    .video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#000; }
+
+    .overview{ margin-top:22px; border-top:1px solid #eee; padding-top:18px; }
+    .overview h2{ font-size:18px; font-weight:800; margin:0 0 12px; letter-spacing:.2px; }
+    .overview p{ font-size:16px; line-height:1.65; margin:0 0 12px; }
+
+    /* -----------------------
+       FOOTER
+       ----------------------- */
+    footer.site-footer{
+      border-top:1px solid #eaeaea; background:#fff;
+      padding:16px 18px; font-size:14px; color:#000;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:10px;
+    }
+    footer.site-footer a{ color:#000; text-decoration:none; font-weight:700; }
+    footer.site-footer a:hover{ color:var(--accent); }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <div id="site-header"></div>
+  <template id="header-fallback">
+    <header class="site-header">
+      <a class="logo" href="index.html">
+        <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1742775262/TastyLogo2024_i09kgy.png" alt="Tasty Heavy logo">
+      </a>
+      <nav aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+  </template>
+
+  <!-- MAIN -->
+  <main>
+    <section class="wrap">
+      <h1 class="project-title" id="projectTitle">Josh Johnson - Marvis</h1>
+
+      <!-- Clean Vimeo embed -->
+      <div class="video">
+        <iframe id="projectVimeo"
+          src="https://player.vimeo.com/video/957904822?autoplay=0&muted=0&loop=0&controls=1&title=0&byline=0&portrait=0&transparent=0&dnt=1"
+          allow="autoplay; fullscreen; picture-in-picture"
+          title="Project Video"></iframe>
+      </div>
+
+      <!-- Overview -->
+      <div class="overview" id="projectOverview">
+          Client: Northern Spy Records &nbsp;•&nbsp; Role: Director, DP, Editor
+        </p>
+        <p>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <div id="site-footer"></div>
+  <template id="footer-fallback">
+    <footer class="site-footer">
+      <span>© 2025 Tasty Heavy</span>
+      <span>
+        <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a>
+        &nbsp; | &nbsp;
+        <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
+      </span>
+    </footer>
+  </template>
+
+  <!-- Scripts -->
+  <script>
+    async function injectPartial(mountId, url, fallbackTemplateId){
+      const mount = document.getElementById(mountId);
+      try{
+        const res = await fetch(url, { credentials:'same-origin' });
+        if(!res.ok) throw new Error('Fetch failed');
+        mount.innerHTML = await res.text();
+      }catch(e){
+        const tpl = document.getElementById(fallbackTemplateId);
+        mount.innerHTML = tpl ? tpl.innerHTML : '';
+      }
+      highlightActiveNav(mount);
+    }
+    function highlightActiveNav(scope){
+      const path = location.pathname.split('/').pop() || 'index.html';
+      const links = scope.querySelectorAll('nav[aria-label="Primary"] a');
+      links.forEach(a=>{
+        const href = a.getAttribute('href');
+        const isHome = (path === '' || path === 'index.html') && (href === 'index.html' || href === './' || href === '/');
+        if(isHome || href === path) a.classList.add('active');
+      });
+    }
+    injectPartial('site-header', '/partials/header.html', 'header-fallback');
+    injectPartial('site-footer', '/partials/footer.html', 'footer-fallback');
+  </script>
+</body>
+</html>

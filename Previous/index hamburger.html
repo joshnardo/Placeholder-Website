@@ -6,24 +6,32 @@
   <title>Tasty Heavy — Home</title>
 
   <style>
-    :root { --accent:#06bebd; --bg:#ffffff; --fg:#000000; --header-h: 95px; }
+    :root { --accent:#06bebd; --bg:#ffffff; --fg:#000000; }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin:0; }
-    body { font-family: "Andale Mono", Arial, sans-serif; background: var(--bg); color: var(--fg); }
+    body { font-family: "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--fg); }
 
     /* -----------------------
-       HEADER + NAV (desktop baseline)
+       HEADER + NAV
        ----------------------- */
     header.site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 5000;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 25px 18px;
+      padding: 25px 18px;                 /* was 10px; +15 top/bottom */
       border-bottom: 1px solid #eaeaea; background: #fff;
+      height: 79px;                       /* was 64px; +15 total */
     }
-
-    .logo-block { display: flex; align-items: flex-end; gap: 12px; flex-shrink: 0; }
+    .logo-block {
+      display: flex; align-items: flex-end; gap: 12px;
+      flex-shrink: 0;
+    }
     .logo img { height: 42px; display: block; }
     .tagline { font-size: 13px; font-weight: 400; color: #555; white-space: nowrap; }
+
+    .nav-wrap {
+      display: flex; align-items: center; justify-content: flex-end;
+      min-width: 100px;
+    }
 
     .desktop-nav { display: flex; gap: 16px; }
     .desktop-nav a {
@@ -33,62 +41,46 @@
     .desktop-nav a:hover { color: var(--accent); }
     .desktop-nav a.active { border-color: var(--accent); color: #000; }
 
-    /* Mobile menu trigger: styled like desktop links (no box) */
-    .menu-link {
-      display: none; /* shown on mobile only */
-      background: none; border: none; padding: 0;
-      font: inherit; font-weight: 700; font-size: 14px; color: #000;
-      cursor: pointer; text-decoration: none;
-      border-bottom: 2px solid transparent;
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      width: 28px; height: 22px; cursor: pointer;
+      z-index: 6000;
     }
-    .menu-link:hover { color: var(--accent); }
-    .menu-link.open { border-bottom-color: var(--accent); }
-    .menu-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    .hamburger span {
+      display: block; height: 3px; width: 100%;
+      background: #000; border-radius: 2px;
+    }
 
-    /* -----------------------
-       Mobile header layout
-       ----------------------- */
+    /* Mobile: drop tagline below logo + show hamburger */
     @media (max-width: 768px) {
-      header.site-header {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 14px 18px 16px;
-      }
       .desktop-nav { display: none; }
-
-      /* Centered "Menu" on top (no box), logo centered, tagline centered under */
-      .menu-link { display: inline-block; }
+      .hamburger { display: flex; }
       .logo-block {
         flex-direction: column;
-        align-items: center;
-        gap: 6px;
+        align-items: flex-start;
+        gap: 2px;
       }
       .tagline {
         white-space: normal;
         font-size: 12px;
         line-height: 1.3;
-        text-align: center;
       }
     }
 
-    /* -----------------------
-       MOBILE NAV PANEL
-       ----------------------- */
     .mobile-nav {
       display: none;
       position: fixed;
-      top: var(--header-h, 95px);
-      left: 0; right: 0;
+      top: 79px; /* matches new header height (was 64px) */
+      left: 0;
+      right: 0;
       background: #fff;
+      flex-direction: column;
       border-top: 1px solid #eaeaea;
       z-index: 7000;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
-    .mobile-nav.show { display: block; }
+    .mobile-nav.show { display: flex; }
     .mobile-nav a {
-      display:block;
       padding: 16px 20px;
       border-bottom: 1px solid #eaeaea;
       text-decoration: none; color: #000; font-weight: 700;
@@ -97,33 +89,73 @@
     .mobile-nav a:hover { background: #f5f5f5; color: var(--accent); }
 
     /* -----------------------
-       GRID
+       FULL-BLEED WORK GRID
        ----------------------- */
-    main { padding-top: calc(var(--header-h, 95px) + 8px); }
+    main { padding-top: 95px; } /* was 80px; +15 to match header change */
     .work-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 16px; padding: 8px; background: #fff; box-sizing: border-box;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 8px;
+      background: #fff;
+      box-sizing: border-box;
     }
-    @media (max-width: 900px) { .work-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
 
-    .card { position: relative; overflow: hidden; background: #fff; border: 8px solid #fff; isolation: isolate; }
-    .card a { display: block; text-decoration: none; color: inherit; }
-    .card a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-    .card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #eee; }
-    .card-title {
-      margin: 8px 2px 0; font-weight: 400; line-height: 1.2;
-      font-size: clamp(14px, 2.4vw, 18px); letter-spacing: .2px; text-wrap: balance;
-      text-align: left;
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      border: 8px solid #fff;
+      isolation: isolate;
     }
-    .card:hover .card-title { color: var(--accent); }
+    .card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .card .overlay {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      padding: 16px;
+      color: #fff;
+      background: rgba(0,0,0,0.45);
+      opacity: 0; transition: opacity .18s ease-in-out;
+      text-align: center;
+    }
+    .card:hover .overlay,
+    .card:focus-within .overlay { opacity: 1; }
+
+    .overlay .title {
+      margin: 0;
+      font-weight: 800;
+      line-height: 1.1;
+      font-size: clamp(18px, 3.2vw, 28px);
+      letter-spacing: .2px;
+      text-wrap: balance;
+    }
+
+    .card a {
+      position: absolute; inset: 0; z-index: 2; text-indent: -9999px;
+    }
+    .card a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
 
     /* -----------------------
        FOOTER
        ----------------------- */
     footer.site-footer {
-      border-top:1px solid #eaeaea; background:#fff; padding:16px 18px;
-      font-size:14px; color:#000; display:flex; justify-content:space-between;
-      align-items:center; flex-wrap:wrap; gap:10px;
+      border-top:1px solid #eaeaea; background:#fff;
+      padding:16px 18px; font-size:14px; color:#000;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:10px;
     }
     footer.site-footer a { color:#000; text-decoration:none; font-weight:700; }
     footer.site-footer a:hover { color:var(--accent); }
@@ -131,21 +163,23 @@
 </head>
 <body>
   <!-- HEADER -->
-  <header class="site-header" id="siteHeader">
-    <!-- Centered Menu trigger (mobile), styled like desktop nav links (no box) -->
-    <button class="menu-link" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
-
+  <header class="site-header">
     <div class="logo-block">
-      <a class="logo" href="index.html" aria-label="Tasty Heavy — Home">
+      <a class="logo" href="index.html">
         <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1742775262/TastyLogo2024_i09kgy.png" alt="Tasty Heavy logo">
       </a>
       <span class="tagline">is Josh Nardo /// Director /// DP /// Editor</span>
     </div>
 
-    <nav aria-label="Primary" class="desktop-nav">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-    </nav>
+    <div class="nav-wrap">
+      <nav aria-label="Primary" class="desktop-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </header>
 
   <!-- MOBILE NAV -->
@@ -170,41 +204,17 @@
   </footer>
 
   <script>
-    // Keep header height in a CSS var so the mobile nav sits just below it
-    function setHeaderHeightVar() {
-      const header = document.getElementById('siteHeader');
-      const h = header ? header.offsetHeight : 95;
-      document.documentElement.style.setProperty('--header-h', h + 'px');
-    }
-    window.addEventListener('resize', setHeaderHeightVar);
-    window.addEventListener('load', setHeaderHeightVar);
-    setHeaderHeightVar();
-
-    // Menu button toggles mobile nav
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileNav = document.getElementById('mobileNav');
-
-    menuBtn.addEventListener('click', () => {
-      const isOpen = mobileNav.classList.toggle('show');
-      menuBtn.setAttribute('aria-expanded', String(isOpen));
-      menuBtn.classList.toggle('open', isOpen);
-      // Recompute in case layout shifts
-      setHeaderHeightVar();
-    });
-
-    // Close mobile nav when a link is clicked
-    mobileNav.addEventListener('click', (e) => {
-      if (e.target.matches('a')) {
-        mobileNav.classList.remove('show');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        menuBtn.classList.remove('open');
-      }
+    // Hamburger toggle
+    const hamburger = document.getElementById("hamburger");
+    const mobileNav = document.getElementById("mobileNav");
+    hamburger.addEventListener("click", () => {
+      mobileNav.classList.toggle("show");
     });
 
     // Projects grid
     const projects = [
       { title:"Brainwash Music Show", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/b5777fb5-3932-4b91-8f24-cb75f9f2a0ea.gif?ClientID=sulu&Date=1757117755&Signature=88355709fa6ba59b49174d785e01a6d121d1a80c", link:"project-brainwash-3.html" },
-      { title:"Sun Day Red - Spectator", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/f9b9d706-388b-431d-bd08-c8db003fe8ab.gif?ClientID=sulu&Date=1757115259&Signature=cf85182d419e9bd9200da57c8272fe66d9e8ae35", link:"project-sdr-spectator.html" },
+      { title:"Sun Day Red", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/f9b9d706-388b-431d-bd08-c8db003fe8ab.gif?ClientID=sulu&Date=1757115259&Signature=cf85182d419e9bd9200da57c8272fe66d9e8ae35", link:"project-sdr-spectator.html" },
       { title:"Shark - Fan Family", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/20c7e6e3-d8d8-4ec7-b697-79efc4aba5cf.gif?ClientID=sulu&Date=1757366592&Signature=5ec1d1204ce373b271fb5ccc4d7a7942db9ab8db", link:"project-shark-fanfamily.html" },
       { title:"Vans - Customs", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/e11bdddc-6afb-4735-8a71-a9e6d08117f9.gif?ClientID=sulu&Date=1757612169&Signature=076daa2adadfdaa4f8e81244427dc32bab550660", link:"project-vans-customs.html" },
       { title:"Beyond Yoga x Rare Beauty", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/9d24f9af-e9a5-453f-8fb2-e9bc229c22ef.gif?ClientID=sulu&Date=1757115661&Signature=102421b28788a7f5367f18cec0f47fdb025d6c18", link:"project-by-rb.html" },
@@ -223,14 +233,13 @@
       { title:"Just Stopping By", img:"https://videoapi-muybridge.vimeocdn.com/animated-thumbnails/image/807be65d-37eb-438d-9976-65e7e2bb4e55.gif?ClientID=sulu&Date=1757620518&Signature=f4211b7f0c03c1b4665a1e725dde679f00aab00b", link:"project-19.html" },
     ];
 
-    const grid = document.getElementById('projectGrid');
+    const grid = document.getElementById("projectGrid");
     projects.forEach(p => {
       grid.innerHTML += `
         <article class="card">
-          <a class="card-link" href="${p.link}" aria-label="Open ${p.title}">
-            <img src="${p.img}" alt="${p.title} thumbnail">
-            <h3 class="card-title">${p.title}</h3>
-          </a>
+          <img src="${p.img}" alt="${p.title} thumbnail">
+          <div class="overlay"><h2 class="title">${p.title}</h2></div>
+          <a href="${p.link}">Open ${p.title}</a>
         </article>`;
     });
   </script>
