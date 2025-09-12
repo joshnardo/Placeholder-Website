@@ -6,26 +6,32 @@
   <title>Tasty Heavy — About</title>
 
   <style>
-    :root { --accent:#06bebd; --bg:#ffffff; --fg:#000000; }
+    :root {
+      --accent:#06bebd;
+      --bg:#ffffff;
+      --fg:#000000;
+      --header-h:95px;   /* updated dynamically via JS */
+      --page-x:20px;     /* page horizontal gutter */
+      --frame:8px;       /* white frame thickness */
+    }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin:0; }
-    body { font-family: "Helvetica Neue", Arial, sans-serif; background: var(--bg); color: var(--fg); }
+    body { font-family: "Andale Mono", Arial, sans-serif; background: var(--bg); color: var(--fg); }
 
     /* -----------------------
-       HEADER + NAV (79px tall)
+       HEADER + NAV (responsive)
        ----------------------- */
     header.site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 5000;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 25px 18px;                 /* +15 top/bottom */
+      padding: 25px 18px;
       border-bottom: 1px solid #eaeaea; background: #fff;
-      height: 79px;                       /* 64 + 15 */
     }
+
     .logo-block { display: flex; align-items: flex-end; gap: 12px; flex-shrink: 0; }
     .logo img { height: 42px; display: block; }
     .tagline { font-size: 13px; font-weight: 400; color: #555; white-space: nowrap; }
 
-    .nav-wrap { display: flex; align-items: center; justify-content: flex-end; min-width: 100px; }
     .desktop-nav { display: flex; gap: 16px; }
     .desktop-nav a {
       text-decoration: none; color: #000; font-weight: 700;
@@ -34,81 +40,122 @@
     .desktop-nav a:hover { color: var(--accent); }
     .desktop-nav a.active { border-color: var(--accent); color: #000; }
 
-    .hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      width: 28px; height: 22px; cursor: pointer; z-index: 6000;
+    /* Mobile "Menu" trigger styled like nav links (no box) */
+    .menu-link {
+      display: none; background: none; border: none; padding: 0;
+      font: inherit; font-weight: 700; font-size: 14px; color: #000;
+      cursor: pointer; text-decoration: none; border-bottom: 2px solid transparent;
     }
-    .hamburger span { display: block; height: 3px; width: 100%; background: #000; border-radius: 2px; }
+    .menu-link:hover { color: var(--accent); }
+    .menu-link.open { border-bottom-color: var(--accent); }
+    .menu-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
-    /* Mobile */
+    /* Mobile layout: center Menu (top), logo, tagline */
     @media (max-width: 768px) {
+      header.site-header {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 18px 16px;
+      }
       .desktop-nav { display: none; }
-      .hamburger { display: flex; }
-      .logo-block { flex-direction: column; align-items: flex-start; gap: 2px; }
-      .tagline { white-space: normal; font-size: 12px; line-height: 1.3; }
+      .menu-link { display: inline-block; }   /* shows at top center */
+      .logo-block { flex-direction: column; align-items: center; gap: 6px; }
+      .tagline { white-space: normal; font-size: 12px; line-height: 1.3; text-align: center; }
     }
-
-    /* MOBILE NAV */
-    .mobile-nav {
-      display: none; position: fixed; top: 79px; left: 0; right: 0;
-      background: #fff; flex-direction: column; border-top: 1px solid #eaeaea; z-index: 7000;
-    }
-    .mobile-nav.show { display: flex; }
-    .mobile-nav a {
-      padding: 16px 20px; border-bottom: 1px solid #eaeaea;
-      text-decoration: none; color: #000; font-weight: 700; font-size: 16px;
-    }
-    .mobile-nav a:hover { background: #f5f5f5; color: var(--accent) }
 
     /* -----------------------
-       PAGE CONTENT (tightened)
+       MOBILE NAV
        ----------------------- */
-    main { padding-top: 88px; max-width: 1000px; margin: 0 auto; } /* tightened from 95px */
+    .mobile-nav {
+      display: none; position: fixed; top: var(--header-h,95px); left: 0; right: 0;
+      background: #fff; border-top: 1px solid #eaeaea; z-index: 7000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+    .mobile-nav.show { display: block; }
+    .mobile-nav a {
+      display:block; padding:16px 20px; border-bottom:1px solid #eaeaea;
+      text-decoration:none; color:#000; font-weight:700; font-size:16px;
+    }
+    .mobile-nav a:hover { background:#f5f5f5; color:var(--accent); }
 
-    /* Hero image — tight under header */
-    .hero { margin: 16px 20px; border: 8px solid #fff; } /* was 40px 20px */
-    .hero img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #eee; }
+    /* -----------------------
+       PAGE CONTENT (alignment tightened)
+       ----------------------- */
+    main {
+      padding-top: calc(var(--header-h,95px) - 7px);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
 
-    /* Body copy — slightly tighter rhythm */
-    section { padding: 0 20px 24px; } /* was 0 20px 40px */
+    /* Hero image — uses outer gutter plus white frame */
+    .hero {
+      margin: 16px var(--page-x);
+      border: var(--frame) solid #fff;
+    }
+    .hero img {
+      display: block; width: 100%;
+      aspect-ratio: 16 / 9; object-fit: cover; background: #eee;
+    }
+
+    /* Base section padding = page gutter */
+    section { padding: 0 var(--page-x) 24px; }
+
+    /* Intro paragraph under hero: align to photo's inner edge */
+    .intro { padding-left: calc(var(--page-x) + var(--frame)); padding-right: calc(var(--page-x) + var(--frame)); }
+
     h2 { font-size: 22px; font-weight: 700; margin: 0 0 15px; }
     p { font-size: 16px; line-height: 1.6; margin: 0 0 16px; }
     ul { padding-left: 20px; margin: 0 0 30px; }
     li { margin-bottom: 8px; }
 
-    /* Capabilities + Contact — equal green top/bottom; snap at 768px (same as hamburger) */
+    /* Capabilities + Contact — iOS halo fix + tuned bottom padding to match visual top */
     .two-col-wrapper {
-      background: var(--accent); color: #fff;
-      margin: 24px 20px 40px;   /* tightened spacing above box */
-      border: 8px solid #fff;
+      background: var(--accent);
+      color: #fff;
+
+      /* equal outer spacing */
+      margin: 0 var(--page-x);
+
+      /* Replace border with inset box-shadow to avoid green halo on iOS */
+      border: 0;
+      box-shadow: 0 0 0 var(--frame) #fff inset;
+
+      /* safety clip */
+      background-clip: padding-box;
+      -webkit-background-clip: padding-box;
     }
     .two-col {
       display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-      padding: 20px 20px;       /* equal green top/bottom */
+
+      /* Top = 20px, Bottom = 16px to counter font half-leading and
+         make the bottom green visually match the space above "Contact" */
+      padding: 20px 20px 16px;
+
       max-width: 100%;
     }
-    .two-col > div > :last-child { margin-bottom: 0 !important; } /* keep bottom green equal */
+    /* normalize first/last child spacing to keep padding clean */
+    .two-col > div > :first-child { margin-top: 0 !important; }
+    .two-col > div > :last-child  { margin-bottom: 0 !important; }
 
     .two-col h2, .two-col p, .two-col li, .two-col a { color: #fff; }
     .two-col a:hover { color: #000; }
 
-    /* ⬇️ Stack at the SAME breakpoint as the hamburger, and center the blocks */
     @media (max-width: 768px) {
-      .two-col {
-        grid-template-columns: 1fr;      /* snap to single column when hamburger shows */
-        gap: 28px;
-        justify-items: center;           /* center each block horizontally */
-      }
-      .two-col > div {
-        width: 100%;
-        max-width: 560px;                /* comfortable line length */
-        text-align: left;                /* keep copy readable while centered block */
-      }
+      .two-col { grid-template-columns: 1fr; gap: 28px; justify-items: center; }
+      .two-col > div { width: 100%; max-width: 560px; text-align: left; }
     }
 
     /* Clients Section */
-    .clients { padding: 32px 20px; text-align: center; }
-    .clients img { width: 80%; max-width: 900px; height: auto; display: block; margin: 0 auto; }
+    .clients { padding: 32px var(--page-x); text-align: center; }
+    .clients img {
+      width: 100%;
+      max-width: none;   /* ensure full width to match hero */
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
 
     /* -----------------------
        FOOTER
@@ -124,24 +171,22 @@
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="site-header">
+  <!-- HEADER (updated) -->
+  <header class="site-header" id="siteHeader">
+    <!-- Centered Menu (mobile), no box, same font as nav -->
+    <button class="menu-link" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+
     <div class="logo-block">
       <a class="logo" href="index.html">
         <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1742775262/TastyLogo2024_i09kgy.png" alt="Tasty Heavy logo">
       </a>
-      <span class="tagline">is Josh Nardo /// Director /// DP /// Editor /// Creative </span>
+      <span class="tagline">is Josh Nardo /// Director /// DP /// Editor </span>
     </div>
 
-    <div class="nav-wrap">
-      <nav aria-label="Primary" class="desktop-nav">
-        <a href="index.html">Home</a>
-        <a href="about.html" class="active">About</a>
-      </nav>
-      <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
+    <nav aria-label="Primary" class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+    </nav>
   </header>
 
   <!-- MOBILE NAV -->
@@ -157,8 +202,8 @@
       <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1757086450/P_238571_khiqr1.jpg" alt="Studio environment photo">
     </div>
 
-    <!-- Studio Description -->
-    <section>
+    <!-- Studio Description (aligned with photo interior edge) -->
+    <section class="intro">
       <p>
         Tasty Heavy is the moniker of Josh Nardo ( and friends ).  With over 15 years in the industry, we are concept driven, video focused, and are always exploring new and exciting ways to make intereting work.
       </p>
@@ -178,7 +223,7 @@
         </div>
         <div>
           <h2>Contact</h2>
-          <p>For inquiries, collaborations, or just to say hi:</p>
+          <p>For inquiries, or just to say hi:</p>
           <p>
             <strong>Email:</strong> <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a><br>
             <strong>Instagram:</strong> <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
@@ -204,12 +249,38 @@
   </footer>
 
   <script>
-    // Hamburger toggle
-    const hamburger = document.getElementById("hamburger");
-    const mobileNav = document.getElementById("mobileNav");
-    hamburger.addEventListener("click", () => {
-      mobileNav.classList.toggle("show");
+    // Keep header height as a CSS var so mobile nav sits right below it
+    function setHeaderHeightVar() {
+      const header = document.getElementById('siteHeader');
+      const h = header ? header.offsetHeight : 95;
+      document.documentElement.style.setProperty('--header-h', h + 'px');
+    }
+    window.addEventListener('load', setHeaderHeightVar);
+    window.addEventListener('resize', setHeaderHeightVar);
+
+    // Mobile "Menu" toggle
+    const menuBtn  = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('show');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      menuBtn.classList.toggle('open', isOpen);
+      setHeaderHeightVar();
     });
+
+    // Close mobile nav on link click
+    mobileNav.addEventListener('click', (e) => {
+      if (e.target.matches('a')) {
+        mobileNav.classList.remove('show');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.classList.remove('open');
+        setHeaderHeightVar();
+      }
+    });
+
+    // Initialize on load
+    setHeaderHeightVar();
   </script>
 </body>
 </html>

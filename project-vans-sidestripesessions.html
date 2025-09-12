@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tasty Heavy — Project</title>
+  <title>Tasty Heavy — Vans - Sidestripe Sessions</title>
 
   <style>
-    :root { --accent:#06bebd; }
+    :root{
+      --accent:#06bebd;
+      --bg:#ffffff;
+      --fg:#000000;
+    }
     *{ box-sizing:border-box }
-    html,body{ height:100% }
+    html,body{ height:100%; margin:0; }
     body{
-      margin:0; font-family:"Helvetica Neue", Arial, sans-serif;
+      font-family:"Andale Mono", Arial, sans-serif;
       background:#fff; color:#000;
       display:flex; flex-direction:column; min-height:100vh;
     }
@@ -19,79 +23,105 @@
     .wrap{ max-width:1100px; margin:0 auto; padding:40px 18px; }
 
     /* -----------------------
-       HEADER + NAV
+       HEADER (sticky, unified)
        ----------------------- */
     header.site-header{
-      position:sticky; top:0; z-index:10;
+      position:sticky; top:0; z-index:5000;
       display:flex; align-items:center; justify-content:space-between;
-      padding:10px 18px; border-bottom:1px solid #eaeaea; background:#fff;
+      padding:10px 18px;
+      border-bottom:1px solid #eaeaea; background:#fff;
     }
+    .logo-block{ display:flex; align-items:flex-end; gap:12px; }
     .logo img{ height:42px; display:block; }
-    nav[aria-label="Primary"] a{
-      text-decoration:none; color:#000; font-weight:700; margin-left:22px;
+    .tagline{ font-size:13px; font-weight:400; color:#555; white-space:nowrap; }
+
+    .desktop-nav{ display:flex; gap:16px; }
+    .desktop-nav a{
+      text-decoration:none; color:#000; font-weight:700;
       padding-bottom:2px; border-bottom:2px solid transparent; font-size:14px;
     }
-    nav[aria-label="Primary"] a:hover{ color:var(--accent); }
-    nav[aria-label="Primary"] a.active{ border-color:var(--accent); }
+    .desktop-nav a:hover{ color:var(--accent); }
+    .desktop-nav a.active{ border-color:var(--accent); color:#000; }
+
+    /* Mobile “Menu” trigger — same typography as nav, no box */
+    .menu-link{
+      display:none; background:none; border:none; padding:0;
+      font:inherit; font-weight:700; font-size:14px; color:#000;
+      cursor:pointer; border-bottom:2px solid transparent;
+    }
+    .menu-link:hover{ color:var(--accent); }
+    .menu-link.open{ border-bottom-color:var(--accent); }
+    .menu-link:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:4px; }
+
+    /* Mobile header layout (centered menu, logo, tagline) */
+    @media (max-width:768px){
+      header.site-header{
+        flex-direction:column; align-items:center; gap:8px;
+        padding:14px 18px 16px;
+      }
+      .desktop-nav{ display:none; }
+      .menu-link{ display:inline-block; } /* centered above logo */
+      .logo-block{ flex-direction:column; align-items:center; gap:6px; }
+      .tagline{ white-space:normal; font-size:12px; line-height:1.3; text-align:center; }
+    }
+
+    /* -----------------------
+       MOBILE NAV (drops under header)
+       ----------------------- */
+    .mobile-nav{
+      display:none; position:fixed; left:0; right:0;
+      top:0; /* pushed down via transform when opened */
+      background:#fff; border-top:1px solid #eaeaea; z-index:7000;
+      box-shadow:0 8px 20px rgba(0,0,0,.06);
+      transform:translateY(calc(var(--header-height,60px))); /* sit under current header height */
+    }
+    .mobile-nav.show{ display:block; }
+    .mobile-nav a{
+      display:block; padding:16px 20px; border-bottom:1px solid #eaeaea;
+      text-decoration:none; color:#000; font-weight:700; font-size:16px;
+    }
+    .mobile-nav a:hover{ background:#f5f5f5; color:var(--accent); }
 
     /* -----------------------
        PROJECT LAYOUT
        ----------------------- */
-    .project-title{ font-size:30px; margin:0 0 18px; font-weight:800; }
-
-    /* Single main video */
-    .featured-video {
-      position:relative;
-      width:100%;
-      aspect-ratio:16/9;
-      margin-bottom:40px;
-      background:#000;
-      overflow:hidden;
+    .project-title{
+      font-size:30px; margin:0 0 18px; font-weight:800;
+      text-align:left; letter-spacing:.2px;
     }
-    .featured-video iframe {
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      background:#000;
+
+    /* Featured video */
+    .featured-video{
+      position:relative; width:100%; aspect-ratio:16/9;
+      margin-bottom:40px; background:#000; overflow:hidden;
+    }
+    .featured-video iframe{
+      position:absolute; inset:0; width:100%; height:100%;
+      border:0; background:#000;
     }
 
     /* Description block */
-    .project-description {
-      margin: 0 0 40px;
-      font-size: 16px;
-      line-height: 1.65;
-      color: #333;
+    .project-description{
+      margin:0 0 40px; font-size:16px; line-height:1.65; color:#333;
     }
-    .project-description p {
-      margin: 0 0 16px;
-    }
+    .project-description p{ margin:0 0 16px; }
 
     /* Grid of 6 videos (responsive) */
-    .video-grid {
+    .video-grid{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap:24px;
     }
-    .video {
-      position:relative;
-      width:100%;
-      aspect-ratio:16/9;
-      background:#000;
-      overflow:hidden;
+    .video{
+      position:relative; width:100%; aspect-ratio:16/9;
+      background:#000; overflow:hidden;
     }
-    .video iframe {
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      background:#000;
+    .video iframe{
+      position:absolute; inset:0; width:100%; height:100%;
+      border:0; background:#000;
     }
 
     .overview{ margin-top:32px; border-top:1px solid #eee; padding-top:18px; }
-    .overview h2{ font-size:18px; font-weight:800; margin:0 0 12px; letter-spacing:.2px; }
     .overview p{ font-size:16px; line-height:1.65; margin:0 0 12px; }
 
     /* -----------------------
@@ -108,19 +138,28 @@
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <div id="site-header"></div>
-  <template id="header-fallback">
-    <header class="site-header">
-      <a class="logo" href="index.html">
+  <!-- HEADER (sticky, copy updated) -->
+  <header class="site-header" id="siteHeader">
+    <button class="menu-link" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+
+    <div class="logo-block">
+      <a class="logo" href="index.html" aria-label="Tasty Heavy — Home">
         <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1742775262/TastyLogo2024_i09kgy.png" alt="Tasty Heavy logo">
       </a>
-      <nav aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-      </nav>
-    </header>
-  </template>
+      <span class="tagline">is Josh Nardo /// Director /// DP /// Editor</span>
+    </div>
+
+    <nav aria-label="Primary" class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </nav>
 
   <!-- MAIN -->
   <main>
@@ -129,19 +168,20 @@
 
       <!-- Featured Single Video -->
       <div class="featured-video">
-        <iframe src="https://www.youtube.com/embed/LqJNqmIzIKU"
+        <iframe
+          src="https://www.youtube.com/embed/LqJNqmIzIKU"
           title="Featured Video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
       </div>
 
       <!-- Project Description -->
       <div class="project-description">
         <p>
-          Together with Vans, we helped develop Sidestripe Sessions, a live music series shot at Vans HQ in Costa Mesa CA.  Over 2 years and 24 episodes, we hosted Anderson Paak, Idles, Cuco, Quicksand, Channel Tres, and more.
+          Together with Vans, we helped develop Sidestripe Sessions, a live music series shot at Vans HQ in Costa Mesa CA. Over 2 years and 24 episodes, we hosted Anderson .Paak, Idles, Cuco, Quicksand, Channel Tres, and more.
         </p>
-        <p>
-          Tasty Heavy handled all aspects of Video and Audio Production and Post Production.
+        <p>          Tasty Heavy handled all aspects of Video Production and Video and Audio Post Production.
         </p>
         <p>
           Below are a few more from the series.
@@ -172,50 +212,49 @@
 
       <!-- Overview -->
       <div class="overview">
-        <h2>Overview</h2>
-        <p> Role: Production, Director, DP, Sound Mix, Editor </p>
+        <p>Role: Production, Director, DP, Sound Mix, Editor</p>
       </div>
     </section>
   </main>
 
   <!-- FOOTER -->
-  <div id="site-footer"></div>
-  <template id="footer-fallback">
-    <footer class="site-footer">
-      <span>© 2025 Tasty Heavy</span>
-      <span>
-        <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a>
-        &nbsp; | &nbsp;
-        <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
-      </span>
-    </footer>
-  </template>
+  <footer class="site-footer">
+    <span>© 2025 Tasty Heavy</span>
+    <span>
+      <a href="mailto:hello@tastyheavy.com">hello@tastyheavy.com</a>
+      &nbsp; | &nbsp;
+      <a href="https://instagram.com/tastyheavy" target="_blank">@tastyheavy</a>
+    </span>
+  </footer>
 
-  <!-- Scripts -->
   <script>
-    async function injectPartial(mountId, url, fallbackTemplateId){
-      const mount = document.getElementById(mountId);
-      try{
-        const res = await fetch(url, { credentials:'same-origin' });
-        if(!res.ok) throw new Error('Fetch failed');
-        mount.innerHTML = await res.text();
-      }catch(e){
-        const tpl = document.getElementById(fallbackTemplateId);
-        mount.innerHTML = tpl ? tpl.innerHTML : '';
+    // Track current header height for mobile-nav placement
+    function setHeaderHeightVar(){
+      const h = document.getElementById('siteHeader')?.offsetHeight || 60;
+      document.documentElement.style.setProperty('--header-height', h + 'px');
+    }
+    window.addEventListener('load', setHeaderHeightVar);
+    window.addEventListener('resize', setHeaderHeightVar);
+
+    // Mobile menu toggle
+    const menuBtn  = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    menuBtn.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('show');
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.classList.toggle('open', open);
+      setHeaderHeightVar();
+    });
+    mobileNav.addEventListener('click', (e) => {
+      if(e.target.matches('a')){
+        mobileNav.classList.remove('show');
+        menuBtn.setAttribute('aria-expanded','false');
+        menuBtn.classList.remove('open');
+        setHeaderHeightVar();
       }
-      highlightActiveNav(mount);
-    }
-    function highlightActiveNav(scope){
-      const path = location.pathname.split('/').pop() || 'index.html';
-      const links = scope.querySelectorAll('nav[aria-label="Primary"] a');
-      links.forEach(a=>{
-        const href = a.getAttribute('href');
-        const isHome = (path === '' || path === 'index.html') && (href === 'index.html' || href === './' || href === '/');
-        if(isHome || href === path) a.classList.add('active');
-      });
-    }
-    injectPartial('site-header', '/partials/header.html', 'header-fallback');
-    injectPartial('site-footer', '/partials/footer.html', 'footer-fallback');
+    });
+
+    setHeaderHeightVar();
   </script>
 </body>
 </html>
