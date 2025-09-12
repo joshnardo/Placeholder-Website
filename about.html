@@ -19,18 +19,18 @@
     body { font-family: "Andale Mono", Arial, sans-serif; background: var(--bg); color: var(--fg); }
 
     /* -----------------------
-       HEADER + NAV (responsive)
+       HEADER + NAV (match reference size)
        ----------------------- */
     header.site-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 5000;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 25px 18px;
+      padding: 10px 18px;                 /* ⬅️ was 25px; now matches reference */
       border-bottom: 1px solid #eaeaea; background: #fff;
     }
 
     .logo-block { display: flex; align-items: flex-end; gap: 12px; flex-shrink: 0; }
-    .logo img { height: 42px; display: block; }
-    .tagline { font-size: 13px; font-weight: 400; color: #555; white-space: nowrap; }
+    .logo img { height: 42px; display: block; }      /* same as reference */
+    .tagline { font-size: 13px; font-weight: 400; color: #555; white-space: nowrap; } /* same as reference */
 
     .desktop-nav { display: flex; gap: 16px; }
     .desktop-nav a {
@@ -50,14 +50,14 @@
     .menu-link.open { border-bottom-color: var(--accent); }
     .menu-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
-    /* Mobile layout: center Menu (top), logo, tagline */
+    /* Mobile layout: center Menu (top), logo, tagline — sizes match reference */
     @media (max-width: 768px) {
       header.site-header {
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        padding: 14px 18px 16px;
+        padding: 14px 18px 16px;           /* same compact mobile padding as reference */
       }
       .desktop-nav { display: none; }
       .menu-link { display: inline-block; }   /* shows at top center */
@@ -81,7 +81,7 @@
     .mobile-nav a:hover { background:#f5f5f5; color:var(--accent); }
 
     /* -----------------------
-       PAGE CONTENT (alignment tightened)
+       PAGE CONTENT
        ----------------------- */
     main {
       padding-top: calc(var(--header-h,95px) - 7px);
@@ -89,7 +89,6 @@
       margin: 0 auto;
     }
 
-    /* Hero image — uses outer gutter plus white frame */
     .hero {
       margin: 16px var(--page-x);
       border: var(--frame) solid #fff;
@@ -99,10 +98,7 @@
       aspect-ratio: 16 / 9; object-fit: cover; background: #eee;
     }
 
-    /* Base section padding = page gutter */
     section { padding: 0 var(--page-x) 24px; }
-
-    /* Intro paragraph under hero: align to photo's inner edge */
     .intro { padding-left: calc(var(--page-x) + var(--frame)); padding-right: calc(var(--page-x) + var(--frame)); }
 
     h2 { font-size: 22px; font-weight: 700; margin: 0 0 15px; }
@@ -110,32 +106,21 @@
     ul { padding-left: 20px; margin: 0 0 30px; }
     li { margin-bottom: 8px; }
 
-    /* Capabilities + Contact — iOS halo fix + tuned bottom padding to match visual top */
+    /* Green two-column block (unchanged) */
     .two-col-wrapper {
       background: var(--accent);
       color: #fff;
-
-      /* equal outer spacing */
       margin: 0 var(--page-x);
-
-      /* Replace border with inset box-shadow to avoid green halo on iOS */
       border: 0;
       box-shadow: 0 0 0 var(--frame) #fff inset;
-
-      /* safety clip */
       background-clip: padding-box;
       -webkit-background-clip: padding-box;
     }
     .two-col {
       display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-
-      /* Top = 20px, Bottom = 16px to counter font half-leading and
-         make the bottom green visually match the space above "Contact" */
       padding: 20px 20px 16px;
-
       max-width: 100%;
     }
-    /* normalize first/last child spacing to keep padding clean */
     .two-col > div > :first-child { margin-top: 0 !important; }
     .two-col > div > :last-child  { margin-bottom: 0 !important; }
 
@@ -147,19 +132,15 @@
       .two-col > div { width: 100%; max-width: 560px; text-align: left; }
     }
 
-    /* Clients Section */
     .clients { padding: 32px var(--page-x); text-align: center; }
     .clients img {
       width: 100%;
-      max-width: none;   /* ensure full width to match hero */
+      max-width: none;
       height: auto;
       display: block;
       margin: 0 auto;
     }
 
-    /* -----------------------
-       FOOTER
-       ----------------------- */
     footer.site-footer {
       border-top:1px solid #eaeaea; background:#fff;
       padding:16px 18px; font-size:14px; color:#000;
@@ -171,9 +152,8 @@
   </style>
 </head>
 <body>
-  <!-- HEADER (updated) -->
+  <!-- HEADER -->
   <header class="site-header" id="siteHeader">
-    <!-- Centered Menu (mobile), no box, same font as nav -->
     <button class="menu-link" id="menuBtn" aria-expanded="false" aria-controls="mobileNav">Menu</button>
 
     <div class="logo-block">
@@ -197,19 +177,16 @@
 
   <!-- MAIN -->
   <main>
-    <!-- Hero Image -->
     <div class="hero">
       <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1757086450/P_238571_khiqr1.jpg" alt="Studio environment photo">
     </div>
 
-    <!-- Studio Description (aligned with photo interior edge) -->
     <section class="intro">
       <p>
         Tasty Heavy is the moniker of Josh Nardo ( and friends ).  With over 15 years in the industry, we are concept driven, video focused, and are always exploring new and exciting ways to make intereting work.
       </p>
     </section>
 
-    <!-- Capabilities + Contact -->
     <section class="two-col-wrapper">
       <div class="two-col">
         <div>
@@ -232,7 +209,6 @@
       </div>
     </section>
 
-    <!-- Clients -->
     <section class="clients">
       <img src="https://res.cloudinary.com/dlyxadp9n/image/upload/v1755731849/client_logos_final_2024updated_sktvjf.png" alt="Client logos">
     </section>
@@ -252,7 +228,7 @@
     // Keep header height as a CSS var so mobile nav sits right below it
     function setHeaderHeightVar() {
       const header = document.getElementById('siteHeader');
-      const h = header ? header.offsetHeight : 95;
+      const h = header ? header.offsetHeight : 60;
       document.documentElement.style.setProperty('--header-h', h + 'px');
     }
     window.addEventListener('load', setHeaderHeightVar);
@@ -269,7 +245,6 @@
       setHeaderHeightVar();
     });
 
-    // Close mobile nav on link click
     mobileNav.addEventListener('click', (e) => {
       if (e.target.matches('a')) {
         mobileNav.classList.remove('show');
@@ -279,7 +254,6 @@
       }
     });
 
-    // Initialize on load
     setHeaderHeightVar();
   </script>
 </body>
